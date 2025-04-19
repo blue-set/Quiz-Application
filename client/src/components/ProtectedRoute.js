@@ -107,6 +107,7 @@ function ProtectedRoute({ children }) {
     } else {
       navigate("/login");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const activeRoute = window.location.pathname;

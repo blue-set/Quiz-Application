@@ -1,6 +1,6 @@
 import React from "react";
 import PageTitle from "../../../components/PageTitle";
-import { message, Modal, Table } from "antd";
+import { message, Table } from "antd";
 import { useDispatch } from "react-redux";
 import { HideLoading, ShowLoading } from "../../../redux/loaderSlice";
 import { getAllReportsByUser } from "../../../apicalls/reports";
@@ -15,6 +15,7 @@ function UserReports() {
       title: "Exam Name",
       dataIndex: "examName",
       render: (text, record) => <>{record.exam.name}</>,
+
     },
     {
       title: "Date",
@@ -63,6 +64,7 @@ function UserReports() {
 
   useEffect(() => {
     getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

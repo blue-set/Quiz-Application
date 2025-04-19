@@ -28,6 +28,7 @@ function Home() {
 
   useEffect(() => {
     getExams();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -37,7 +38,7 @@ function Home() {
         <div className="divider"></div>
         <Row gutter={[16, 16]}>
           {exams.map((exam) => (
-            <Col span={6}>
+            <Col span={6} key={exam._id}>
               <div className="card-lg flex flex-col gap-1 p-2">
                 <h1 className="text-2xl">{exam?.name}</h1>
 

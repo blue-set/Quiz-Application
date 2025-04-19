@@ -96,23 +96,33 @@ function WriteExam() {
     setIntervalId(intervalId);
   };
 
+  const formatTime = (seconds) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes.toString().padStart(2, "0")}:${remainingSeconds
+      .toString()
+      .padStart(2, "0")}`;
+  };
+
   useEffect(() => {
     if (timeUp && view === "questions") {
       clearInterval(intervalId);
       calculateResult();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timeUp]);
 
   useEffect(() => {
     if (params.id) {
       getExamData();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     examData && (
       <div className="mt-2">
         <div className="divider"></div>
-        <h1 className="text-center">{examData.name}</h1>
+        <h1 className="text-center">{examData?.name}</h1>
         <div className="divider"></div>
 
         {view === "instructions" && (
@@ -126,18 +136,19 @@ function WriteExam() {
         {view === "questions" && (
           <div className="flex flex-col gap-2">
             <div className="flex justify-between">
-              <h1 className="text-2xl">
-                {selectedQuestionIndex + 1} :{" "}
-                {questions[selectedQuestionIndex].name}
-              </h1>
+              {questions[selectedQuestionIndex]?.name && (
+                <h1 className="text-2xl">
+                  {selectedQuestionIndex + 1} : {questions[selectedQuestionIndex].name}
+                </h1>
+              )}
 
               <div className="timer">
-                <span className="text-2xl">{secondsLeft}</span>
+                <span className="text-2xl">{formatTime(secondsLeft)}</span>
               </div>
             </div>
 
             <div className="flex flex-col gap-2">
-              {Object.keys(questions[selectedQuestionIndex].options).map(
+              {Object.keys(questions[selectedQuestionIndex]?.options || {}).map(
                 (option, index) => {
                   return (
                     <div
@@ -155,8 +166,7 @@ function WriteExam() {
                       }}
                     >
                       <h1 className="text-xl">
-                        {option} :{" "}
-                        {questions[selectedQuestionIndex].options[option]}
+                        {option} : {questions[selectedQuestionIndex].options[option]}
                       </h1>
                     </div>
                   );
